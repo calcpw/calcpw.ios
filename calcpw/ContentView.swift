@@ -143,18 +143,20 @@ struct ContentView : View {
             // check for more errors
             if (0 >= password1.count) {
                 calculatedPassword = "password must not be empty"
-            } else if (0 >= value.count) {
-                calculatedPassword = "information value must not be empty"
             } else if (password1 != password2) {
                 calculatedPassword = "passwords do not match"
+            } else if (0 >= value.count) {
+                calculatedPassword = "information must not be empty"
+            } else if (0 >= length_str.count) {
+                calculatedPassword = "length must not be empty"
             } else if (0 >= length) {
                 calculatedPassword = "length must be larger than 0"
             } else if (1024 < length) {
                 calculatedPassword = "length must be smaller than or equal to 1024"
-            } else if (0 >= charset.count) {
-                calculatedPassword = "character set is malformed"
             } else if (enforce && (length < charset.count)) {
                 calculatedPassword = "length is smaller than the number of enforced character groups"
+            } else if (0 >= charset.count) {
+                calculatedPassword = "character set is malformed"
             } else {
                 // calculate the password
                 calculatedPassword = calcpw(password1, information, length, charset, enforce)
@@ -322,7 +324,7 @@ struct ContentView : View {
     func isNumeric(
         _ string : String
     ) -> Bool {
-        var result : Bool = (0 < string.count)
+        var result : Bool = true
 
         for char in string {
             result = (result && char.isASCII && (0x30...0x39 ~= char.asciiValue!))
