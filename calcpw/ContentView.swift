@@ -95,6 +95,7 @@ struct ContentView : View {
     @State private var length_str            : String        = String(DEFAULT_LENGTH)
     @State private var password1             : String        = ""
     @State private var password2             : String        = ""
+    @State private var showConfiguration     : Bool          = false
     @State private var showCopiedToClipboard : Bool          = false
     @State private var value                 : String        = ""
 
@@ -575,96 +576,116 @@ struct ContentView : View {
                 Rectangle()
                     .fill(Color("BackgroundColor"))
                     .frame(maxWidth : .infinity, maxHeight : .infinity)
+
                 Image("ApplicationImage")
-            }.onAppear(perform : {
+            }.onAppear {
                 UIApplication.shared.hideKeyboard()
-            }).statusBar(hidden : true)
+            }.statusBar(hidden : true)
         } else {
             ZStack {
-                ScrollView {
-                    VStack {
-                        Text("Password:")
-                            .font(Font.custom("DejaVuSansMono", size : 16))
-                            .fontWeight(.semibold)
-                            .multilineTextAlignment(.leading)
-                            .padding([.top, .leading, .trailing])
+                Form {
+                    Section(header : Text("Password")) {
                         SecureField("Enter Password", text : $password1)
                             .autocapitalization(.none)
                             .disableAutocorrection(true)
                             .font(Font.custom("DejaVuSansMono", size : 16))
                             .keyboardType(.asciiCapable)
-                            .padding(.horizontal)
-                            .textContentType(/*@START_MENU_TOKEN@*/.password/*@END_MENU_TOKEN@*/)
+                            .textContentType(.password)
+
                         SecureField("Repeat Password", text : $password2)
                             .autocapitalization(.none)
                             .disableAutocorrection(true)
                             .font(Font.custom("DejaVuSansMono", size : 16))
                             .keyboardType(.asciiCapable)
-                            .padding([.leading, .bottom, .trailing])
-                            .textContentType(/*@START_MENU_TOKEN@*/.password/*@END_MENU_TOKEN@*/)
+                            .textContentType(.password)
+                    }
 
-                        Text("Information:")
-                            .font(Font.custom("DejaVuSansMono", size : 16))
-                            .fontWeight(.semibold)
-                            .multilineTextAlignment(.leading)
-                            .padding([.top, .leading, .trailing])
+                    Section(header : Text("Information")) {
                         TextField("Enter Information", text : $information)
                             .autocapitalization(.none)
                             .disableAutocorrection(true)
                             .font(Font.custom("DejaVuSansMono", size : 16))
                             .keyboardType(.asciiCapable)
-                            .padding(.horizontal)
-                            .textContentType(/*@START_MENU_TOKEN@*/.password/*@END_MENU_TOKEN@*/)
 
-                        DisclosureGroup("Configuration") {
-                            Text("Length:")
-                                .font(Font.custom("DejaVuSansMono", size : 16))
-                                .multilineTextAlignment(.leading)
-                            TextField("Enter Length", text : $length_str)
-                                .autocapitalization(.none)
-                                .disableAutocorrection(true)
-                                .font(Font.custom("DejaVuSansMono", size : 16))
-                                .keyboardType(.numberPad)
-                            Text("Character Set:")
-                                .font(Font.custom("DejaVuSansMono", size : 16))
-                                .multilineTextAlignment(.leading)
-                            TextField("Enter Character Set", text : $charset_str)
-                                .autocapitalization(.none)
-                                .disableAutocorrection(true)
-                                .font(Font.custom("DejaVuSansMono", size : 16))
-                                .keyboardType(.asciiCapable)
-                                .textContentType(/*@START_MENU_TOKEN@*/.password/*@END_MENU_TOKEN@*/)
+                        HStack {
+                            Text("Configuration")
+                                .foregroundColor(.blue)
+
+                            Spacer()
+
+                            Image(systemName : (showConfiguration) ? "chevron.down" : "chevron.right")
+                                .foregroundColor(.blue)
+                        }.contentShape(Rectangle())
+                        .onTapGesture {
+                            showConfiguration.toggle()
+                        }
+
+                        if (showConfiguration) {
+                            HStack {
+                                Text("Length")
+
+                                TextField("Enter Length", text : $length_str)
+                                    .autocapitalization(.none)
+                                    .disableAutocorrection(true)
+                                    .font(Font.custom("DejaVuSansMono", size : 16))
+                                    .keyboardType(.numberPad)
+                                    .multilineTextAlignment(.trailing)
+                            }
+
+                            HStack {
+                                Text("Character Set")
+
+                                TextField("Enter Character Set", text : $charset_str)
+                                    .autocapitalization(.none)
+                                    .disableAutocorrection(true)
+                                    .font(Font.custom("DejaVuSansMono", size : 16))
+                                    .keyboardType(.asciiCapable)
+                                    .multilineTextAlignment(.trailing)
+                            }
+
                             Toggle(isOn : $enforce) {
                                 Text("Enforce")
                                     .font(Font.custom("DejaVuSansMono", size : 16))
                             }
-                        }.font(Font.custom("DejaVuSansMono", size : 16))
-                        .padding([.leading, .bottom, .trailing])
-
-                        Button("Calculate Password") {
-                            buttonClicked()
-                        }.font(Font.custom("DejaVuSansMono", size : 16))
-                        .padding(.all)
-
-                        Text(calculatedPassword)
-                            .font(Font.custom("DejaVuSansMono", size : 16))
-                            .fontWeight(.semibold)
-                            .lineLimit(nil)
-                            .textSelection(.enabled)
-                            .textContentType(/*@START_MENU_TOKEN@*/.password/*@END_MENU_TOKEN@*/)
-                            .onTapGesture(perform : {
-                                // copy the password to the local clipboard
-                                UIPasteboard.general.setItems([[UTType.utf8PlainText.identifier : calculatedPassword]], options : [.localOnly : true])
-
-                                // show an info about it
-                                withAnimation(.linear) {
-                                    showCopiedToClipboard = true
-                                }
-                            })
+                        }
                     }
-                }.onTapGesture(perform : {
+
+                    // as buttons in Forms look and behave weirdly
+                    // we emulate a button by means of an HStack
+                    Section {
+                        HStack {
+                            Text("Calculate Password")
+                                .foregroundColor(.blue)
+                                .frame(maxWidth : .infinity, maxHeight : .infinity, alignment : .center)
+                        }.contentShape(Rectangle())
+                        .onTapGesture {
+                            buttonClicked()
+                        }
+                    }
+
+                    Section {
+                        HStack {
+                            Text(calculatedPassword)
+                                .font(Font.custom("DejaVuSansMono", size : 16))
+                                .fontWeight(.semibold)
+                                .frame(maxWidth : .infinity, maxHeight : .infinity, alignment : .center)
+                                .lineLimit(nil)
+                                .textContentType(.password)
+                                .textSelection(.enabled)
+                        }.contentShape(Rectangle())
+                        .onTapGesture {
+                            // copy the password to the local clipboard
+                            UIPasteboard.general.setItems([[UTType.utf8PlainText.identifier : calculatedPassword]], options : [.localOnly : true])
+
+                            // show an info about it
+                            withAnimation(.linear) {
+                                showCopiedToClipboard = true
+                            }
+                        }
+                    }
+                }.onTapGesture {
                     UIApplication.shared.hideKeyboard()
-                })
+                }
 
                 if (showCopiedToClipboard) {
                     // let us cancel an animation
@@ -690,22 +711,22 @@ struct ContentView : View {
                                     .foregroundColor(.white)
                                     .font(.system(size : 50, weight : .semibold))
                                     .padding(.bottom)
+
                                 Text("Copied to Clipboard")
-                                    .font(Font.custom("DejaVuSansMono", size : 16))
                                     .fontWeight(.semibold)
                                     .foregroundColor(.white)
                             }
                         }
-                    }.onAppear(perform : {
+                    }.onAppear {
                         // start hiding the info right after showing it
                         DispatchQueue.main.asyncAfter(deadline : .now() + 1, execute : dispatchItem)
-                    }).onTapGesture(perform : {
+                    }.onTapGesture {
                         // cancel the hiding animation
                         dispatchItem.cancel()
 
                         // hide the info directly
                         showCopiedToClipboard = false
-                    }).zIndex(1) // ensure that we are on top
+                    }.zIndex(1) // ensure that we are on top
                 }
             }.statusBar(hidden : false)
         }
