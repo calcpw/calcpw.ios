@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.1b3 (13.04.2022)
+
+* Bug: correct font on one input field
+* Feature: hide calculated password
+* Feature: toggle between hidden and shown password
+
 ## v1.1b2 (13.04.2022)
 
 * Feature: improve the input checks

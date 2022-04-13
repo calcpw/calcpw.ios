@@ -87,6 +87,7 @@ struct ContentView : View {
 
     // define our state
     @State private var calculatedPassword    : String        = ""
+    @State private var calculationSuccess    : Bool          = false
     @State private var charset               : [[Character]] = []
     @State private var charset_str           : String        = DEFAULT_CHARACTERSET
     @State private var enforce               : Bool          = DEFAULT_ENFORCE
@@ -97,6 +98,7 @@ struct ContentView : View {
     @State private var password2             : String        = ""
     @State private var showConfiguration     : Bool          = false
     @State private var showCopiedToClipboard : Bool          = false
+    @State private var showPassword          : Bool          = false
     @State private var value                 : String        = ""
 
     // encrypt a plaintext block with the key using AES-256-ECB
@@ -125,6 +127,11 @@ struct ContentView : View {
 
     // handle the button click
     func buttonClicked() {
+        // clear previous password display
+        calculatedPassword = ""
+        calculationSuccess = false
+        showPassword       = false
+
         // check for errors
         if (!isAscii(password1)) {
             calculatedPassword = "password contains illegal characters"
@@ -155,6 +162,8 @@ struct ContentView : View {
                 calculatedPassword = "length must be smaller than or equal to 1024"
             } else if (enforce && (length < charset.count)) {
                 calculatedPassword = "length is smaller than the number of enforced character groups"
+            } else if (0 >= charset_str.count) {
+                calculatedPassword = "character set must not be empty"
             } else if (0 >= charset.count) {
                 calculatedPassword = "character set is malformed"
             } else {
@@ -195,6 +204,9 @@ struct ContentView : View {
         var result     : String      = ""
         var temp       : UInt16      = 0
 
+        // prepare display of calculated password
+        calculationSuccess = true
+
         // flatten the charset to be more time-constant during
         // the encoding, this way we do not have to switch between
         // arrays based on the random data, the generation of the
@@ -214,12 +226,14 @@ struct ContentView : View {
         // key derivation
         pbkdf2 = pbkdf2_sha256(password, information, PBKDF2_ITERATIONS)
         if (0 >= pbkdf2.count) {
-            result = "key derivation failed"
+            calculationSuccess = false
+            result             = "key derivation failed"
         } else {
             // random IV generation
             counter = aes256_ecb(pbkdf2, [UInt8](repeating : 0, count : 16))
             if (0 >= counter.count) {
-                result = "random IV generation failed"
+                calculationSuccess = false
+                result             = "random IV generation failed"
             } else {
                 // key expansion and and encoding
                 repeat {
@@ -227,7 +241,8 @@ struct ContentView : View {
                     block = aes256_ecb(pbkdf2, counter)
 
                     if (0 >= block.count) {
-                        result = "key expansion failed"
+                        calculationSuccess = false
+                        result             = "key expansion failed"
                     } else {
                         // generate password characters
                         i = 0
@@ -619,7 +634,9 @@ struct ContentView : View {
                                 .foregroundColor(.blue)
                         }.contentShape(Rectangle())
                         .onTapGesture {
-                            showConfiguration.toggle()
+                            withAnimation(.linear) {
+                                showConfiguration.toggle()
+                            }
                         }
 
                         if (showConfiguration) {
@@ -647,7 +664,6 @@ struct ContentView : View {
 
                             Toggle(isOn : $enforce) {
                                 Text("Enforce")
-                                    .font(Font.custom("DejaVuSansMono", size : 16))
                             }
                         }
                     }
@@ -661,20 +677,31 @@ struct ContentView : View {
                                 .frame(maxWidth : .infinity, maxHeight : .infinity, alignment : .center)
                         }.contentShape(Rectangle())
                         .onTapGesture {
-                            buttonClicked()
+                            withAnimation(.linear) {
+                                buttonClicked()
+                            }
                         }
                     }
 
                     Section {
-                        HStack {
-                            Text(calculatedPassword)
+                        HStack (alignment : .firstTextBaseline) {
+                            Text((calculationSuccess && (!showPassword)) ? "[hidden]" : calculatedPassword)
+                                .fixedSize(horizontal : false, vertical : true)
                                 .font(Font.custom("DejaVuSansMono", size : 16))
-                                .fontWeight(.semibold)
                                 .frame(maxWidth : .infinity, maxHeight : .infinity, alignment : .center)
                                 .lineLimit(nil)
+                                .padding(.vertical)
                                 .textContentType(.password)
                                 .textSelection(.enabled)
-                        }.contentShape(Rectangle())
+
+                            if (calculationSuccess) {
+                                Image(systemName : (showPassword) ? "eye.fill" : "eye.slash.fill")
+                                .onTapGesture {
+                                    showPassword.toggle()
+                                }
+                            }
+                        }.clipped()
+                        .contentShape(Rectangle())
                         .onTapGesture {
                             // copy the password to the local clipboard
                             UIPasteboard.general.setItems([[UTType.utf8PlainText.identifier : calculatedPassword]], options : [.localOnly : true])
