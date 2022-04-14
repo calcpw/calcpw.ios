@@ -9,4 +9,4 @@ This app implements the calc.pw password calculation algorithm and serves as a r
 
 ## App Store
 
-calpw.io is currently available on the [App Store](https://apps.apple.com/de/app/calc-pw/id1618770594).
+calpw.ios is currently available on the [App Store](https://apps.apple.com/de/app/calc-pw/id1618770594).
