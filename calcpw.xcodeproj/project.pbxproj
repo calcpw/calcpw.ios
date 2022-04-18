@@ -7,18 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B931BF0B280436EE00F70A4D /* DejaVuSansMono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B931BF0A280436EE00F70A4D /* DejaVuSansMono.ttf */; };
+		B95655FE280DAB300042822D /* DejaVuSansMono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B95655FD280DAB300042822D /* DejaVuSansMono.ttf */; };
+		B9565602280DAB3D0042822D /* CalcPW.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95655FF280DAB3D0042822D /* CalcPW.swift */; };
+		B9565603280DAB3D0042822D /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9565600280DAB3D0042822D /* UIApplication.swift */; };
+		B9565604280DAB3D0042822D /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9565601280DAB3D0042822D /* String.swift */; };
+		B9565608280DAB450042822D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9565605280DAB450042822D /* MainView.swift */; };
+		B9565609280DAB450042822D /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9565606280DAB450042822D /* PrivacyView.swift */; };
+		B956560A280DAB450042822D /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9565607280DAB450042822D /* MessageView.swift */; };
+		B956560C280DB3500042822D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B956560B280DB3500042822D /* Settings.bundle */; };
+		B99C70A02809E68000DE5EF6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B99C709E2809E68000DE5EF6 /* Localizable.strings */; };
 		B9D5D5CF2801C244003C3877 /* calcpwApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D5D5CE2801C244003C3877 /* calcpwApp.swift */; };
-		B9D5D5D12801C244003C3877 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D5D5D02801C244003C3877 /* ContentView.swift */; };
 		B9D5D5D32801C245003C3877 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9D5D5D22801C245003C3877 /* Assets.xcassets */; };
 		B9D5D5DF280303B1003C3877 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9D5D5DD280303AA003C3877 /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B931BF0A280436EE00F70A4D /* DejaVuSansMono.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = DejaVuSansMono.ttf; sourceTree = "<group>"; };
+		B95655FD280DAB300042822D /* DejaVuSansMono.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = DejaVuSansMono.ttf; path = Fonts/DejaVuSansMono.ttf; sourceTree = "<group>"; };
+		B95655FF280DAB3D0042822D /* CalcPW.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalcPW.swift; path = Helpers/CalcPW.swift; sourceTree = "<group>"; };
+		B9565600280DAB3D0042822D /* UIApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIApplication.swift; path = Helpers/UIApplication.swift; sourceTree = "<group>"; };
+		B9565601280DAB3D0042822D /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = String.swift; path = Helpers/String.swift; sourceTree = "<group>"; };
+		B9565605280DAB450042822D /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainView.swift; path = Views/MainView.swift; sourceTree = "<group>"; };
+		B9565606280DAB450042822D /* PrivacyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrivacyView.swift; path = Views/PrivacyView.swift; sourceTree = "<group>"; };
+		B9565607280DAB450042822D /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageView.swift; path = Views/MessageView.swift; sourceTree = "<group>"; };
+		B956560B280DB3500042822D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		B99C709F2809E68000DE5EF6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B99C70A12809E68A00DE5EF6 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B9D5D5CB2801C244003C3877 /* calcpw.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = calcpw.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9D5D5CE2801C244003C3877 /* calcpwApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = calcpwApp.swift; sourceTree = "<group>"; };
-		B9D5D5D02801C244003C3877 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B9D5D5D22801C245003C3877 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B9D5D5DD280303AA003C3877 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B9D5D5E428032891003C3877 /* calcpw-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "calcpw-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -56,11 +71,18 @@
 		B9D5D5CD2801C244003C3877 /* calcpw */ = {
 			isa = PBXGroup;
 			children = (
-				B931BF0A280436EE00F70A4D /* DejaVuSansMono.ttf */,
+				B9565605280DAB450042822D /* MainView.swift */,
+				B9565607280DAB450042822D /* MessageView.swift */,
+				B9565606280DAB450042822D /* PrivacyView.swift */,
+				B95655FF280DAB3D0042822D /* CalcPW.swift */,
+				B9565601280DAB3D0042822D /* String.swift */,
+				B9565600280DAB3D0042822D /* UIApplication.swift */,
+				B95655FD280DAB300042822D /* DejaVuSansMono.ttf */,
 				B9D5D5E428032891003C3877 /* calcpw-Info.plist */,
+				B99C709E2809E68000DE5EF6 /* Localizable.strings */,
 				B9D5D5CE2801C244003C3877 /* calcpwApp.swift */,
-				B9D5D5D02801C244003C3877 /* ContentView.swift */,
 				B9D5D5D22801C245003C3877 /* Assets.xcassets */,
+				B956560B280DB3500042822D /* Settings.bundle */,
 			);
 			path = calcpw;
 			sourceTree = "<group>";
@@ -115,6 +137,7 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
 			);
 			mainGroup = B9D5D5C22801C244003C3877;
 			productRefGroup = B9D5D5CC2801C244003C3877 /* Products */;
@@ -131,8 +154,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B956560C280DB3500042822D /* Settings.bundle in Resources */,
 				B9D5D5D32801C245003C3877 /* Assets.xcassets in Resources */,
-				B931BF0B280436EE00F70A4D /* DejaVuSansMono.ttf in Resources */,
+				B99C70A02809E68000DE5EF6 /* Localizable.strings in Resources */,
+				B95655FE280DAB300042822D /* DejaVuSansMono.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,18 +168,37 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B9D5D5D12801C244003C3877 /* ContentView.swift in Sources */,
+				B9565603280DAB3D0042822D /* UIApplication.swift in Sources */,
+				B9565604280DAB3D0042822D /* String.swift in Sources */,
+				B9565602280DAB3D0042822D /* CalcPW.swift in Sources */,
+				B956560A280DAB450042822D /* MessageView.swift in Sources */,
+				B9565609280DAB450042822D /* PrivacyView.swift in Sources */,
+				B9565608280DAB450042822D /* MainView.swift in Sources */,
 				B9D5D5CF2801C244003C3877 /* calcpwApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		B99C709E2809E68000DE5EF6 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B99C709F2809E68000DE5EF6 /* en */,
+				B99C70A12809E68A00DE5EF6 /* de */,
+			);
+			name = Localizable.strings;
+			path = ..;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		B9D5D5D72801C245003C3877 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -202,7 +246,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -216,6 +260,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -257,9 +302,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -275,15 +321,15 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = BH5KBH55VV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "calcpw-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = calc.pw;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -291,12 +337,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = sh.yahe.calcpw;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 15.0;
 			};
 			name = Debug;
 		};
@@ -308,15 +355,15 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = BH5KBH55VV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "calcpw-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = calc.pw;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -324,12 +371,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = sh.yahe.calcpw;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 15.0;
 			};
 			name = Release;
 		};

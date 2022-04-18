@@ -1,0 +1,33 @@
+"Calculate Password"    = "Passwort berechnen";
+"Character Set"         = "Zeichensatz";
+"Configuration"         = "Konfiguration";
+"Copied to Clipboard"   = "In Zwischenablage kopiert";
+"Enforce Character Set" = "Zeichensatz erzwingen";
+"Enter Character Set"   = "Zeichensatz eingeben";
+"Enter Information"     = "Information eingeben";
+"Enter Length"          = "Länge eingeben";
+"Enter Password"        = "Passwort eingeben";
+"Length"                = "Länge";
+"Password"              = "Passwort";
+"Repeat Password"       = "Passwort erneut eingeben";
+"Save As Default"       = "Als Vorgabe speichern";
+"Saved As Default"      = "Als Vorgabe gespeichert";
+
+"character set contains illegal characters"                      = "der Zeichensatz enthält ungültige Zeichen";
+"character set is malformed"                                     = "der Zeichensatz hat ein ungültiges Format";
+"character set must not be empty"                                = "der Zeichensatz darf nicht leer sein";
+"information contains illegal characters"                        = "die Information enthält ungültige Zeichen";
+"information must not be empty"                                  = "die Information darf nicht leer sein";
+"key derivation failed"                                          = "die Schlüsselableitung ist fehlgeschlagen";
+"key expansion failed"                                           = "die Schlüsselerweiterung ist fehlgeschlagen";
+"length contains illegal characters"                             = "die Länge enthält ungültige Zeichen";
+"length is smaller than the number of enforced character groups" = "die Länge ist kleiner als die Anzahl der erzwungenen Zeichengruppen";
+"length must be larger than 0"                                   = "die Länge muss größer als 0 sein";
+"length must be smaller than or equal to %d"                     = "die Länge muss kleiner oder gleich %d sein";
+"length must not be empty"                                       = "die Länge darf nicht leer sein";
+"password contains illegal characters"                           = "das Passwort enthält ungültige Zeichen";
+"password must not be empty"                                     = "das Passwort darf nicht leer sein";
+"passwords do not match"                                         = "die eingegebenen Passwörter stimmen nicht überein";
+"random IV generation failed"                                    = "die Generierung des zufälligen IV ist fehlgeschlagen";
+
+"[hidden]" = "[ausgeblendet]";

@@ -1,0 +1,33 @@
+"Calculate Password"    = "Calculate Password";
+"Character Set"         = "Character Set";
+"Configuration"         = "Configuration";
+"Copied to Clipboard"   = "Copied to Clipboard";
+"Enforce Character Set" = "Enforce Character Set";
+"Enter Character Set"   = "Enter Character Set";
+"Enter Information"     = "Enter Information";
+"Enter Length"          = "Enter Length";
+"Enter Password"        = "Enter Password";
+"Length"                = "Length";
+"Password"              = "Password";
+"Repeat Password"       = "Repeat Password";
+"Save As Default"       = "Save As Default";
+"Saved As Default"      = "Saved As Default";
+
+"character set contains illegal characters"                      = "character set contains illegal characters";
+"character set is malformed"                                     = "character set is malformed";
+"character set must not be empty"                                = "character set must not be empty";
+"information contains illegal characters"                        = "information contains illegal characters";
+"information must not be empty"                                  = "information must not be empty";
+"key derivation failed"                                          = "key derivation failed";
+"key expansion failed"                                           = "key expansion failed";
+"length contains illegal characters"                             = "length contains illegal characters";
+"length is smaller than the number of enforced character groups" = "length is smaller than the number of enforced character groups";
+"length must be larger than 0"                                   = "length must be larger than 0";
+"length must be smaller than or equal to %d"                     = "length must be smaller than or equal to %d";
+"length must not be empty"                                       = "length must not be empty";
+"password contains illegal characters"                           = "password contains illegal characters";
+"password must not be empty"                                     = "password must not be empty";
+"passwords do not match"                                         = "passwords do not match";
+"random IV generation failed"                                    = "random IV generation failed";
+
+"[hidden]" = "[hidden]";
