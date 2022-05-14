@@ -35,7 +35,7 @@ struct MainView : View {
     @State private var stateShowConfiguration     : Bool   = false
     @State private var stateShowCopiedToClipboard : Bool   = false
     @State private var stateShowPassword          : Bool   = false
-    @State private var stateShowSavedAsDefaults   : Bool   = false
+    @State private var stateShowSavedAsDefault    : Bool   = false
 
     // ===== PRIVATE FUNCTIONS =====
 
@@ -84,10 +84,10 @@ struct MainView : View {
     // check if all form values are set so that the password can be calculated
     private func isMainViewFormFilledOut(
     ) -> Bool {
-        return ((0 < statePassword1.count)   &&
-                (0 < statePassword2.count)   &&
-                (0 < stateInformation.count) &&
-                (0 < stateLength.count)      &&
+        return ((0 < statePassword1.count)     &&
+                (0 < statePassword2.count)     &&
+                (0 < stateInformation.count)   &&
+                (0 < stateLength.count)        &&
                 (0 < stateCharacterset.count))
     }
 
@@ -114,7 +114,7 @@ struct MainView : View {
 
             // show an info about it
             withAnimation(.linear) {
-                stateShowSavedAsDefaults = true
+                stateShowSavedAsDefault = true
             }
         }
     }
@@ -285,8 +285,8 @@ struct MainView : View {
                 if (stateShowCopiedToClipboard) {
                     MessageView("Copied to Clipboard", "doc.on.clipboard", $stateShowCopiedToClipboard)
                 }
-                if (stateShowSavedAsDefaults) {
-                    MessageView("Saved As Default", "square.and.arrow.down", $stateShowSavedAsDefaults)
+                if (stateShowSavedAsDefault) {
+                    MessageView("Saved As Default", "square.and.arrow.down", $stateShowSavedAsDefault)
                 }
             }.statusBar(hidden : false)
             .zIndex(0) // ensure that we are in the back
