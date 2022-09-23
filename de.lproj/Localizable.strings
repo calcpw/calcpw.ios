@@ -31,3 +31,5 @@
 "random IV generation failed"                                    = "die Generierung des zufälligen IV ist fehlgeschlagen";
 
 "[hidden]" = "[ausgeblendet]";
+
+"calc.pw uses your iOS authentication information to protect your passwords." = "calc.pw nutzt Deine iOS-Authentisierungsinformationen um Deine Passwörter zu schützen.";

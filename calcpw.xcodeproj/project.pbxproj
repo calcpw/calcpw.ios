@@ -15,6 +15,7 @@
 		B9565609280DAB450042822D /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9565606280DAB450042822D /* PrivacyView.swift */; };
 		B956560A280DAB450042822D /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9565607280DAB450042822D /* MessageView.swift */; };
 		B956560C280DB3500042822D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B956560B280DB3500042822D /* Settings.bundle */; };
+		B9757A3128DE5D8E0055091F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B9757A3328DE5D8E0055091F /* InfoPlist.strings */; };
 		B99C70A02809E68000DE5EF6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B99C709E2809E68000DE5EF6 /* Localizable.strings */; };
 		B9D5D5CF2801C244003C3877 /* calcpwApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D5D5CE2801C244003C3877 /* calcpwApp.swift */; };
 		B9D5D5D32801C245003C3877 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9D5D5D22801C245003C3877 /* Assets.xcassets */; };
@@ -30,6 +31,8 @@
 		B9565606280DAB450042822D /* PrivacyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrivacyView.swift; path = Views/PrivacyView.swift; sourceTree = "<group>"; };
 		B9565607280DAB450042822D /* MessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageView.swift; path = Views/MessageView.swift; sourceTree = "<group>"; };
 		B956560B280DB3500042822D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		B9757A3228DE5D8E0055091F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B9757A3428DE5D970055091F /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B99C709F2809E68000DE5EF6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B99C70A12809E68A00DE5EF6 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B9D5D5CB2801C244003C3877 /* calcpw.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = calcpw.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,6 +57,7 @@
 		B9D5D5C22801C244003C3877 = {
 			isa = PBXGroup;
 			children = (
+				B9757A3328DE5D8E0055091F /* InfoPlist.strings */,
 				B9D5D5CD2801C244003C3877 /* calcpw */,
 				B9D5D5CC2801C244003C3877 /* Products */,
 				B9D5D5DC280303A9003C3877 /* Frameworks */,
@@ -158,6 +162,7 @@
 				B9D5D5D32801C245003C3877 /* Assets.xcassets in Resources */,
 				B99C70A02809E68000DE5EF6 /* Localizable.strings in Resources */,
 				B95655FE280DAB300042822D /* DejaVuSansMono.ttf in Resources */,
+				B9757A3128DE5D8E0055091F /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,6 +186,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		B9757A3328DE5D8E0055091F /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B9757A3228DE5D8E0055091F /* en */,
+				B9757A3428DE5D970055091F /* de */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		B99C709E2809E68000DE5EF6 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -328,16 +342,16 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "calcpw-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = calc.pw;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "calc.pw wants to use Face ID to lock the app and protect your passwords.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = sh.yahe.calcpw;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -362,16 +376,17 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "calcpw-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = calc.pw;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "calc.pw wants to use Face ID to lock the app and protect your passwords.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.3;
+				NSFaceIDUsageDescription = "";
 				PRODUCT_BUNDLE_IDENTIFIER = sh.yahe.calcpw;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

@@ -14,6 +14,9 @@ struct MainView : View {
 
     // ===== PRIVATE CONSTANTS =====
 
+    // this defines the timeout to lock the application
+    public static let LOCK_TIMEOUT : TimeInterval = 60;
+
     // this defines the grouping of the displayed password
     private static let PASSWORD_GROUPS_LENGTH   : Int = 8
     private static let PASSWORD_GROUPS_PER_LINE : Int = 3
@@ -24,18 +27,27 @@ struct MainView : View {
     @Environment(\.redactionReasons) private var environmentRedactionReasons : RedactionReasons
 
     // define our state
-    @State private var stateCalculatedPassword    : String = ""
-    @State private var stateCalculationSuccess    : Bool   = false
-    @State private var stateCharacterset          : String = calcpwApp.appstorageCharacterset
-    @State private var stateEnforce               : Bool   = calcpwApp.appstorageEnforce
-    @State private var stateInformation           : String = ""
-    @State private var stateLength                : String = calcpwApp.appstorageLength
-    @State private var statePassword1             : String = ""
-    @State private var statePassword2             : String = ""
-    @State private var stateShowConfiguration     : Bool   = false
-    @State private var stateShowCopiedToClipboard : Bool   = false
-    @State private var stateShowPassword          : Bool   = false
-    @State private var stateShowSavedAsDefault    : Bool   = false
+    @State private var stateCalculatedPassword    : String       = ""
+    @State private var stateCalculationSuccess    : Bool         = false
+    @State private var stateCharacterset          : String       = calcpwApp.appstorageCharacterset
+    @State private var stateEnforce               : Bool         = calcpwApp.appstorageEnforce
+    @State private var stateInformation           : String       = ""
+    @State private var stateLength                : String       = calcpwApp.appstorageLength
+    @State private var statePassword1             : String       = ""
+    @State private var statePassword2             : String       = ""
+    @State private var stateShowConfiguration     : Bool         = false
+    @State private var stateShowCopiedToClipboard : Bool         = false
+    @State private var stateShowPassword          : Bool         = false
+    @State private var stateShowSavedAsDefault    : Bool         = false
+    @State private var stateUnlocked              : Bool         = false
+    @State private var stateUnlockedOnce          : Bool         = false
+    @State private var stateUnlockedTimestamp     : TimeInterval = 0
+
+    init(
+        _ unlocked : Bool
+    ) {
+        _stateUnlocked = State(initialValue : unlocked)
+    }
 
     // ===== PRIVATE FUNCTIONS =====
 
@@ -97,6 +109,31 @@ struct MainView : View {
         return ((stateCharacterset != calcpwApp.appstorageCharacterset) ||
                 (stateEnforce      != calcpwApp.appstorageEnforce)      ||
                 (stateLength       != calcpwApp.appstorageLength))
+    }
+
+    // handle MainView appear
+    private func mainViewAppeared() {
+        // when we are unlocked and started the application lock timeout
+        // before then let's check if we reached the lock timeout
+        if (stateUnlocked && (0 != stateUnlockedTimestamp)) {
+            // when reached the lock timeout then we lock the application
+            if (MainView.LOCK_TIMEOUT < (Date().timeIntervalSince1970 - stateUnlockedTimestamp)) {
+                stateUnlocked     = false
+                stateUnlockedOnce = false
+            }
+        }
+
+        // reset the lock timeout in all cases
+        stateUnlockedTimestamp = 0
+    }
+
+    // handle MailView disappear
+    private func mainViewDisappeared() {
+        // when we are unlocked and exit the view then let's start
+        // the timeout until the application gets locked
+        if (stateUnlocked) {
+            stateUnlockedTimestamp = Date().timeIntervalSince1970
+        }
     }
 
     // handle MainView-Form click
@@ -163,142 +200,149 @@ struct MainView : View {
 
     public var body : some View {
         if (environmentRedactionReasons.contains(.privacy)) {
-            PrivacyView()
+            PrivacyView($stateUnlocked, $stateUnlockedOnce)
         } else {
-            ZStack {
-                Form {
-                    Section(header : Text(LocalizedStringKey("Password"))) {
-                        SecureField(LocalizedStringKey("Enter Password"), text : $statePassword1)
-                            .autocapitalization(.none)
-                            .disableAutocorrection(true)
-                            .font(Font.custom("DejaVuSansMono", size : 16))
-                            .keyboardType(.asciiCapable)
-                            .textContentType(.password)
+            if (!stateUnlocked) {
+                PrivacyView($stateUnlocked, $stateUnlockedOnce)
+            } else {
+                ZStack {
+                    Form {
+                        Section(header : Text(LocalizedStringKey("Password"))) {
+                            SecureField(LocalizedStringKey("Enter Password"), text : $statePassword1)
+                                .autocapitalization(.none)
+                                .disableAutocorrection(true)
+                                .font(Font.custom("DejaVuSansMono", size : 16))
+                                .keyboardType(.asciiCapable)
+                                .textContentType(.password)
 
-                        SecureField(LocalizedStringKey("Repeat Password"), text : $statePassword2)
-                            .autocapitalization(.none)
-                            .disableAutocorrection(true)
-                            .font(Font.custom("DejaVuSansMono", size : 16))
-                            .keyboardType(.asciiCapable)
-                            .textContentType(.password)
-                    }
-
-                    Section(header : Text(LocalizedStringKey("Information"))) {
-                        TextField(LocalizedStringKey("Enter Information"), text : $stateInformation)
-                            .autocapitalization(.none)
-                            .disableAutocorrection(true)
-                            .font(Font.custom("DejaVuSansMono", size : 16))
-                            .keyboardType(.asciiCapable)
-
-                        HStack {
-                            Text(LocalizedStringKey("Configuration"))
-                                .foregroundColor(.blue)
-
-                            Spacer()
-
-                            Image(systemName : (stateShowConfiguration) ? "chevron.down" : "chevron.right")
-                                .foregroundColor(.blue)
-                        }.contentShape(Rectangle())
-                        .onTapGesture {
-                            configurationButtonClicked()
+                            SecureField(LocalizedStringKey("Repeat Password"), text : $statePassword2)
+                                .autocapitalization(.none)
+                                .disableAutocorrection(true)
+                                .font(Font.custom("DejaVuSansMono", size : 16))
+                                .keyboardType(.asciiCapable)
+                                .textContentType(.password)
                         }
 
-                        if (stateShowConfiguration) {
-                            HStack {
-                                Text(LocalizedStringKey("Length"))
-
-                                TextField(LocalizedStringKey("Enter Length"), text : $stateLength)
-                                    .autocapitalization(.none)
-                                    .disableAutocorrection(true)
-                                    .font(Font.custom("DejaVuSansMono", size : 16))
-                                    .keyboardType(.numberPad)
-                                    .multilineTextAlignment(.trailing)
-                            }
+                        Section(header : Text(LocalizedStringKey("Information"))) {
+                            TextField(LocalizedStringKey("Enter Information"), text : $stateInformation)
+                                .autocapitalization(.none)
+                                .disableAutocorrection(true)
+                                .font(Font.custom("DejaVuSansMono", size : 16))
+                                .keyboardType(.asciiCapable)
 
                             HStack {
-                                Text(LocalizedStringKey("Character Set"))
+                                Text(LocalizedStringKey("Configuration"))
+                                    .foregroundColor(.blue)
 
-                                TextField(LocalizedStringKey("Enter Character Set"), text : $stateCharacterset)
-                                    .autocapitalization(.none)
-                                    .disableAutocorrection(true)
-                                    .font(Font.custom("DejaVuSansMono", size : 16))
-                                    .keyboardType(.asciiCapable)
-                                    .multilineTextAlignment(.trailing)
-                            }
+                                Spacer()
 
-                            Toggle(isOn : $stateEnforce) {
-                                Text(LocalizedStringKey("Enforce Character Set"))
-                            }
-
-                            HStack {
-                                Text(LocalizedStringKey("Save As Default"))
-                                    .foregroundColor(isConfigurationModified() ? .blue : .gray)
-                                    .frame(maxWidth : .infinity, maxHeight : .infinity, alignment : .center)
-                                }.contentShape(Rectangle())
+                                Image(systemName : (stateShowConfiguration) ? "chevron.down" : "chevron.right")
+                                    .foregroundColor(.blue)
+                            }.contentShape(Rectangle())
                             .onTapGesture {
-                                saveAsDefaultButtonClicked()
+                                configurationButtonClicked()
                             }
-                        }
-                    }
 
-                    // as buttons in Forms look and behave weirdly
-                    // we emulate a button by means of an HStack
-                    Section {
-                        HStack {
-                            Text(LocalizedStringKey("Calculate Password"))
-                                .foregroundColor(isMainViewFormFilledOut() ? .blue : .gray)
-                                .frame(maxWidth : .infinity, maxHeight : .infinity, alignment : .center)
-                        }.contentShape(Rectangle())
-                        .onTapGesture {
-                            calculateButtonClicked()
-                        }
-                    }
+                            if (stateShowConfiguration) {
+                                HStack {
+                                    Text(LocalizedStringKey("Length"))
 
-                    Section {
-                        HStack (alignment : .firstTextBaseline) {
-                            if (!stateCalculationSuccess) {
-                                PasswordText(stateCalculatedPassword)
-                            } else {
-                                if (stateShowPassword) {
-                                    PasswordText(splitIntoGroups(stateCalculatedPassword))
-                                } else {
-                                    PasswordText(NSLocalizedString("[hidden]", comment : ""))
+                                    TextField(LocalizedStringKey("Enter Length"), text : $stateLength)
+                                        .autocapitalization(.none)
+                                        .disableAutocorrection(true)
+                                        .font(Font.custom("DejaVuSansMono", size : 16))
+                                        .keyboardType(.numberPad)
+                                        .multilineTextAlignment(.trailing)
                                 }
-                            }
 
-                            if (stateCalculationSuccess) {
-                                Image(systemName : (stateShowPassword) ? "eye.fill" : "eye.slash.fill")
+                                HStack {
+                                    Text(LocalizedStringKey("Character Set"))
+
+                                    TextField(LocalizedStringKey("Enter Character Set"), text : $stateCharacterset)
+                                        .autocapitalization(.none)
+                                        .disableAutocorrection(true)
+                                        .font(Font.custom("DejaVuSansMono", size : 16))
+                                        .keyboardType(.asciiCapable)
+                                        .multilineTextAlignment(.trailing)
+                                }
+
+                                Toggle(isOn : $stateEnforce) {
+                                    Text(LocalizedStringKey("Enforce Character Set"))
+                                }
+
+                                HStack {
+                                    Text(LocalizedStringKey("Save As Default"))
+                                        .foregroundColor(isConfigurationModified() ? .blue : .gray)
+                                        .frame(maxWidth : .infinity, maxHeight : .infinity, alignment : .center)
+                                    }.contentShape(Rectangle())
                                 .onTapGesture {
-                                    showPasswordButtonClicked()
+                                    saveAsDefaultButtonClicked()
                                 }
                             }
-                        }.clipped()
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            copyToClipboardButtonClicked()
                         }
-                    }
-                }.onTapGesture {
-                    mainViewFormClicked()
-                }
 
-                if (stateShowCopiedToClipboard) {
-                    MessageView("Copied to Clipboard", "doc.on.clipboard", $stateShowCopiedToClipboard)
-                }
-                if (stateShowSavedAsDefault) {
-                    MessageView("Saved As Default", "square.and.arrow.down", $stateShowSavedAsDefault)
-                }
-            }.statusBar(hidden : false)
-            .zIndex(0) // ensure that we are in the back
+                        // as buttons in Forms look and behave weirdly
+                        // we emulate a button by means of an HStack
+                        Section {
+                            HStack {
+                                Text(LocalizedStringKey("Calculate Password"))
+                                    .foregroundColor(isMainViewFormFilledOut() ? .blue : .gray)
+                                    .frame(maxWidth : .infinity, maxHeight : .infinity, alignment : .center)
+                            }.contentShape(Rectangle())
+                            .onTapGesture {
+                                calculateButtonClicked()
+                            }
+                        }
+
+                        Section {
+                            HStack (alignment : .firstTextBaseline) {
+                                if (!stateCalculationSuccess) {
+                                    PasswordText(stateCalculatedPassword)
+                                } else {
+                                    if (stateShowPassword) {
+                                        PasswordText(splitIntoGroups(stateCalculatedPassword))
+                                    } else {
+                                        PasswordText(NSLocalizedString("[hidden]", comment : ""))
+                                    }
+                                }
+
+                                if (stateCalculationSuccess) {
+                                    Image(systemName : (stateShowPassword) ? "eye.fill" : "eye.slash.fill")
+                                    .onTapGesture {
+                                        showPasswordButtonClicked()
+                                    }
+                                }
+                            }.clipped()
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                copyToClipboardButtonClicked()
+                            }
+                        }
+                    }.onTapGesture {
+                        mainViewFormClicked()
+                    }
+
+                    if (stateShowCopiedToClipboard) {
+                        MessageView("Copied to Clipboard", "doc.on.clipboard", $stateShowCopiedToClipboard)
+                    }
+                    if (stateShowSavedAsDefault) {
+                        MessageView("Saved As Default", "square.and.arrow.down", $stateShowSavedAsDefault)
+                    }
+                }.onAppear {
+                    mainViewAppeared()
+                }.onDisappear {
+                    mainViewDisappeared()
+                }.statusBar(hidden : false)
+                .zIndex(0) // ensure that we are in the back
+            }
         }
     }
-
 }
 
 struct MainView_Previews : PreviewProvider {
 
     public static var previews : some View {
-        MainView()
+        MainView(true)
     }
 
 }

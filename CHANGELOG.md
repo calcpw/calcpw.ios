@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.3b1 (24.09.2022)
+
+* Feature: introduced app lock with Face ID, Touch ID or passcode
+
 ## v1.2b1 (18.04.2022)
 
 * Feature: restructured the code to be more maintainable

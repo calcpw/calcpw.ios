@@ -27,7 +27,7 @@ struct calcpwApp : App {
 
     public var body : some Scene {
         WindowGroup {
-            MainView()
+            MainView(false)
         }
     }
 
