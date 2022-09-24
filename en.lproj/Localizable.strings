@@ -30,6 +30,7 @@
 "passwords do not match"                                         = "passwords do not match";
 "random IV generation failed"                                    = "random IV generation failed";
 
-"[hidden]" = "[hidden]";
+"[hidden]"         = "[hidden]";
+"Generate QR Code" = "Generate QR Code";
 
 "calc.pw uses your iOS authentication information to protect your passwords." = "calc.pw uses your iOS authentication information to protect your passwords.";

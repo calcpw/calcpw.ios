@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B91044B528DFBFC100A06D54 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91044B428DFBFC100A06D54 /* UIImage.swift */; };
 		B95655FE280DAB300042822D /* DejaVuSansMono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B95655FD280DAB300042822D /* DejaVuSansMono.ttf */; };
 		B9565602280DAB3D0042822D /* CalcPW.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95655FF280DAB3D0042822D /* CalcPW.swift */; };
 		B9565603280DAB3D0042822D /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9565600280DAB3D0042822D /* UIApplication.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B91044B428DFBFC100A06D54 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIImage.swift; path = calcpw/Helpers/UIImage.swift; sourceTree = "<group>"; };
 		B95655FD280DAB300042822D /* DejaVuSansMono.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = DejaVuSansMono.ttf; path = Fonts/DejaVuSansMono.ttf; sourceTree = "<group>"; };
 		B95655FF280DAB3D0042822D /* CalcPW.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalcPW.swift; path = Helpers/CalcPW.swift; sourceTree = "<group>"; };
 		B9565600280DAB3D0042822D /* UIApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIApplication.swift; path = Helpers/UIApplication.swift; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 		B9D5D5C22801C244003C3877 = {
 			isa = PBXGroup;
 			children = (
+				B91044B428DFBFC100A06D54 /* UIImage.swift */,
 				B9757A3328DE5D8E0055091F /* InfoPlist.strings */,
 				B9D5D5CD2801C244003C3877 /* calcpw */,
 				B9D5D5CC2801C244003C3877 /* Products */,
@@ -174,6 +177,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9565603280DAB3D0042822D /* UIApplication.swift in Sources */,
+				B91044B528DFBFC100A06D54 /* UIImage.swift in Sources */,
 				B9565604280DAB3D0042822D /* String.swift in Sources */,
 				B9565602280DAB3D0042822D /* CalcPW.swift in Sources */,
 				B956560A280DAB450042822D /* MessageView.swift in Sources */,
@@ -342,7 +346,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "calcpw-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = calc.pw;
-				INFOPLIST_KEY_NSFaceIDUsageDescription = "calc.pw wants to use Face ID to lock the app and protect your passwords.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "calc.pw wants to use Face ID to lock the app and further protect your passwords.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -351,7 +355,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = sh.yahe.calcpw;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -376,7 +380,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "calcpw-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = calc.pw;
-				INFOPLIST_KEY_NSFaceIDUsageDescription = "calc.pw wants to use Face ID to lock the app and protect your passwords.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "calc.pw wants to use Face ID to lock the app and further protect your passwords.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -385,7 +389,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4;
 				NSFaceIDUsageDescription = "";
 				PRODUCT_BUNDLE_IDENTIFIER = sh.yahe.calcpw;
 				PRODUCT_NAME = "$(TARGET_NAME)";

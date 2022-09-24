@@ -30,6 +30,7 @@
 "passwords do not match"                                         = "die eingegebenen Passwörter stimmen nicht überein";
 "random IV generation failed"                                    = "die Generierung des zufälligen IV ist fehlgeschlagen";
 
-"[hidden]" = "[ausgeblendet]";
+"[hidden]"         = "[ausgeblendet]";
+"Generate QR Code" = "QR-Code generieren";
 
 "calc.pw uses your iOS authentication information to protect your passwords." = "calc.pw nutzt Deine iOS-Authentisierungsinformationen um Deine Passwörter zu schützen.";

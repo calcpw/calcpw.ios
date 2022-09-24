@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.4b1 (25.09.2022)
+
+* Feature: introduced password transfer via QR code generation
+* Feature: introduced symbols for all buttons
+
 ## v1.3b1 (24.09.2022)
 
 * Feature: introduced app lock with Face ID, Touch ID or passcode
@@ -8,7 +13,7 @@
 
 * Feature: restructured the code to be more maintainable
 * Feature: improved naming of environment and state variables
-* Feature: improved readability of the generated password
+* Feature: improved readability of the generated passwords
 * Feature: introduced localization support and a German translation
 * Feature: introduced user-defined configuration defaults
 * Feature: introduced UI checks to prevent user input errors

@@ -21,6 +21,17 @@ struct MainView : View {
     private static let PASSWORD_GROUPS_LENGTH   : Int = 8
     private static let PASSWORD_GROUPS_PER_LINE : Int = 3
 
+    // this defines the QR code correction level,
+    // we select a low-percentage error correction as we will display the QR code on a
+    // high-resolution screen which will produce virtually no errors while reading it
+    //
+    // the available correction levels are:
+    // "L" - Low-percentage error correction: 20% of the symbol data is dedicated to error correction.
+    // "M" - Medium-percentage error correction: 37% of the symbol data is dedicated to error correction.
+    // "Q" - High-percentage error correction: 55% of the symbol data is dedicated to error correction.
+    // "H" - Very-high-percentage error correction: 65% of the symbol data is dedicated to error correction.
+    private static let QR_CODE_CORRECTION_LEVEL : String = "L"
+
     // ===== PRIVATE VARIABLES =====
 
     // let us find out if we should hide the app content
@@ -38,6 +49,7 @@ struct MainView : View {
     @State private var stateShowConfiguration     : Bool         = false
     @State private var stateShowCopiedToClipboard : Bool         = false
     @State private var stateShowPassword          : Bool         = false
+    @State private var stateShowQRCode            : Bool         = false
     @State private var stateShowSavedAsDefault    : Bool         = false
     @State private var stateUnlocked              : Bool         = false
     @State private var stateUnlockedOnce          : Bool         = false
@@ -59,6 +71,7 @@ struct MainView : View {
                 stateCalculatedPassword = ""
                 stateCalculationSuccess = false
                 stateShowPassword       = false
+                stateShowQRCode         = false
 
                 // calculate the password
                 stateCalculatedPassword = CalcPW.calcpw(statePassword1, statePassword2, stateInformation, stateLength, stateCharacterset, stateEnforce, $stateCalculationSuccess)
@@ -116,7 +129,7 @@ struct MainView : View {
         // when we are unlocked and started the application lock timeout
         // before then let's check if we reached the lock timeout
         if (stateUnlocked && (0 != stateUnlockedTimestamp)) {
-            // when reached the lock timeout then we lock the application
+            // when the lock timeout is reached we lock the application
             if (MainView.LOCK_TIMEOUT < (Date().timeIntervalSince1970 - stateUnlockedTimestamp)) {
                 stateUnlocked     = false
                 stateUnlockedOnce = false
@@ -159,6 +172,11 @@ struct MainView : View {
     // handle show-password button click
     private func showPasswordButtonClicked() {
         stateShowPassword.toggle()
+    }
+
+    // handle show-qrcode button click
+    private func showQRCodeButtonClicked() {
+        stateShowQRCode = true
     }
 
     // this splits a string into groups to make it more legible
@@ -230,6 +248,8 @@ struct MainView : View {
                                 .font(Font.custom("DejaVuSansMono", size : 16))
                                 .keyboardType(.asciiCapable)
 
+                            // as buttons in Forms look and behave weirdly
+                            // we emulate a button by means of an HStack
                             HStack {
                                 Text(LocalizedStringKey("Configuration"))
                                     .foregroundColor(.blue)
@@ -270,52 +290,96 @@ struct MainView : View {
                                     Text(LocalizedStringKey("Enforce Character Set"))
                                 }
 
-                                HStack {
+                                // as buttons in Forms look and behave weirdly
+                                // we emulate a button by means of an HStack
+                                HStack(alignment : .center, spacing : 5) {
+                                    Spacer()
+
+                                    Image(systemName : "slider.horizontal.3")
+                                        .foregroundColor(isConfigurationModified() ? .blue : .gray)
+
                                     Text(LocalizedStringKey("Save As Default"))
                                         .foregroundColor(isConfigurationModified() ? .blue : .gray)
-                                        .frame(maxWidth : .infinity, maxHeight : .infinity, alignment : .center)
-                                    }.contentShape(Rectangle())
+
+                                    Spacer()
+                                }.contentShape(Rectangle())
                                 .onTapGesture {
                                     saveAsDefaultButtonClicked()
                                 }
                             }
                         }
 
-                        // as buttons in Forms look and behave weirdly
-                        // we emulate a button by means of an HStack
                         Section {
-                            HStack {
+                            // as buttons in Forms look and behave weirdly
+                            // we emulate a button by means of an HStack
+                            HStack(alignment : .center, spacing : 5) {
+                                Spacer()
+
+                                Image(systemName : "lock")
+                                    .foregroundColor(isMainViewFormFilledOut() ? .blue : .gray)
+
                                 Text(LocalizedStringKey("Calculate Password"))
                                     .foregroundColor(isMainViewFormFilledOut() ? .blue : .gray)
-                                    .frame(maxWidth : .infinity, maxHeight : .infinity, alignment : .center)
+
+                                Spacer()
                             }.contentShape(Rectangle())
                             .onTapGesture {
                                 calculateButtonClicked()
                             }
                         }
 
-                        Section {
-                            HStack (alignment : .firstTextBaseline) {
-                                if (!stateCalculationSuccess) {
-                                    PasswordText(stateCalculatedPassword)
-                                } else {
-                                    if (stateShowPassword) {
-                                        PasswordText(splitIntoGroups(stateCalculatedPassword))
+                        if ("" != stateCalculatedPassword) {
+                            Section {
+                                HStack (alignment : .firstTextBaseline) {
+                                    if (!stateCalculationSuccess) {
+                                        PasswordText(stateCalculatedPassword)
                                     } else {
-                                        PasswordText(NSLocalizedString("[hidden]", comment : ""))
+                                        if (stateShowPassword) {
+                                            PasswordText(splitIntoGroups(stateCalculatedPassword))
+                                        } else {
+                                            PasswordText(NSLocalizedString("[hidden]", comment : ""))
+                                        }
                                     }
-                                }
 
-                                if (stateCalculationSuccess) {
-                                    Image(systemName : (stateShowPassword) ? "eye.fill" : "eye.slash.fill")
-                                    .onTapGesture {
-                                        showPasswordButtonClicked()
+                                    if (stateCalculationSuccess) {
+                                        Image(systemName : (stateShowPassword) ? "eye.fill" : "eye.slash.fill")
+                                        .onTapGesture {
+                                            showPasswordButtonClicked()
+                                        }
+                                    }
+                                }.clipped()
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    copyToClipboardButtonClicked()
+                                }
+                            }
+
+                            if (stateShowPassword) {
+                                Section {
+                                    if (stateShowQRCode) {
+                                        Image(uiImage : UIImage.generateQRCode(stateCalculatedPassword, MainView.QR_CODE_CORRECTION_LEVEL))
+                                            .interpolation(.none)
+                                            .resizable()
+                                            .scaledToFit()
+                                    } else {
+                                        // as buttons in Forms look and behave weirdly
+                                        // we emulate a button by means of an HStack
+                                        HStack(alignment : .center, spacing : 5) {
+                                            Spacer()
+
+                                            Image(systemName : "qrcode")
+                                                .foregroundColor(.blue)
+
+                                            Text(LocalizedStringKey("Generate QR Code"))
+                                                .foregroundColor(.blue)
+
+                                            Spacer()
+                                        }.contentShape(Rectangle())
+                                        .onTapGesture {
+                                            showQRCodeButtonClicked()
+                                        }
                                     }
                                 }
-                            }.clipped()
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                copyToClipboardButtonClicked()
                             }
                         }
                     }.onTapGesture {
