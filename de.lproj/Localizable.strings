@@ -33,4 +33,4 @@
 "[hidden]"         = "[ausgeblendet]";
 "Generate QR Code" = "QR-Code generieren";
 
-"calc.pw uses your iOS authentication information to protect your passwords." = "calc.pw nutzt Deine iOS-Authentisierungsinformationen um Deine Passwörter zu schützen.";
+"calc.pw uses your iOS credentials to protect your passwords." = "calc.pw nutzt Deine iOS-Anmeldedaten, um Deine Passwörter zu schützen.";

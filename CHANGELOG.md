@@ -2,6 +2,7 @@
 
 ## v1.4b1 (25.09.2022)
 
+* Bug: shortened authentication texts so they do not get cut off
 * Feature: introduced password transfer via QR code generation
 * Feature: introduced symbols for all buttons
 
@@ -21,9 +22,9 @@
 
 ## v1.1b3 (13.04.2022)
 
-* Bug: correct font on one input field
-* Feature: hide calculated password
-* Feature: toggle between hidden and shown password
+* Bug: corrected font on one input field
+* Feature: introduced hidden calculated password by default
+* Feature: introduced toggle between hidden and shown password
 
 ## v1.1b2 (13.04.2022)
 

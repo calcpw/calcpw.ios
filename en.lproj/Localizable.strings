@@ -33,4 +33,4 @@
 "[hidden]"         = "[hidden]";
 "Generate QR Code" = "Generate QR Code";
 
-"calc.pw uses your iOS authentication information to protect your passwords." = "calc.pw uses your iOS authentication information to protect your passwords.";
+"calc.pw uses your iOS credentials to protect your passwords." = "calc.pw uses your iOS credentials to protect your passwords.";

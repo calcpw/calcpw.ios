@@ -52,7 +52,7 @@ struct PrivacyView : View {
             stateUnlocked.wrappedValue     = true
             stateUnlockedOnce.wrappedValue = false
         } else {
-            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason : NSLocalizedString("calc.pw uses your iOS authentication information to protect your passwords.", comment : "")) {
+            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason : NSLocalizedString("calc.pw uses your iOS credentials to protect your passwords.", comment : "")) {
                 (success, authenticationError) in
 
                 if (success) {

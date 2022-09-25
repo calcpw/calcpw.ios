@@ -8,9 +8,9 @@
 
 import SwiftUI
 
-// allow us to dismiss the keyboard with a tap
 extension UIApplication {
 
+    // dismiss the keyboard with a tap
     public func hideKeyboard() {
         sendAction(#selector(UIResponder.resignFirstResponder), to : nil, from : nil, for : nil)
     }
