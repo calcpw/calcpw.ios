@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.4.1b1 (28.09.2022)
+
+* Bug: fix wrongly generated reason for local authentication on Appe Silicon MacBooks
+
 ## v1.4b1 (25.09.2022)
 
 * Bug: shortened authentication texts so they do not get cut off

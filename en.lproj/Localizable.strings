@@ -33,4 +33,7 @@
 "[hidden]"         = "[hidden]";
 "Generate QR Code" = "Generate QR Code";
 
-"calc.pw uses your iOS credentials to protect your passwords." = "calc.pw uses your iOS credentials to protect your passwords.";
+"calc.pw is trying to use your iOS credentials to protect your passwords." = "calc.pw is trying to use your iOS credentials to protect your passwords.";
+
+// fix wrongly generated reason for local authentication on Appe Silicon MacBooks
+"use your macOS credentials to protect your passwords" = "use your macOS credentials to protect your passwords";

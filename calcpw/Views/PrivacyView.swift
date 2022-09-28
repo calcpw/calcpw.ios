@@ -52,7 +52,13 @@ struct PrivacyView : View {
             stateUnlocked.wrappedValue     = true
             stateUnlockedOnce.wrappedValue = false
         } else {
-            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason : NSLocalizedString("calc.pw uses your iOS credentials to protect your passwords.", comment : "")) {
+            // fix wrongly generated reason for local authentication on Appe Silicon MacBooks
+            var reason : String = "calc.pw is trying to use your iOS credentials to protect your passwords."
+            if (ProcessInfo.processInfo.isiOSAppOnMac) {
+                reason = "use your macOS credentials to protect your passwords"
+            }
+
+            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason : NSLocalizedString(reason, comment : "")) {
                 (success, authenticationError) in
 
                 if (success) {
