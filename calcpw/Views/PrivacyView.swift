@@ -52,7 +52,7 @@ struct PrivacyView : View {
             stateUnlocked.wrappedValue     = true
             stateUnlockedOnce.wrappedValue = false
         } else {
-            // fix wrongly generated reason for local authentication on Appe Silicon MacBooks
+            // fix wrongly generated reason for local authentication on Apple Silicon MacBooks
             var reason : String = "calc.pw is trying to use your iOS credentials to protect your passwords."
             if (ProcessInfo.processInfo.isiOSAppOnMac) {
                 reason = "use your macOS credentials to protect your passwords"
