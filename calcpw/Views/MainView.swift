@@ -12,14 +12,24 @@ import UniformTypeIdentifiers
 
 struct MainView : View {
 
+    // ==== PRIVATE TYPES =====
+
+    // change focused inputs based on this enum
+    private enum FocusStateEnum : Hashable {
+        case enterPassword
+        case repeatPassword
+        case enterInformation
+        case enterLength
+        case enterCharacterSet
+    }
+
     // ===== PRIVATE CONSTANTS =====
 
     // this defines the timeout to lock the application
     public static let LOCK_TIMEOUT : TimeInterval = 60;
 
     // this defines the grouping of the displayed password
-    private static let PASSWORD_GROUPS_LENGTH   : Int = 8
-    private static let PASSWORD_GROUPS_PER_LINE : Int = 3
+    private static let PASSWORD_GROUPS_LENGTH : Int = 8
 
     // this defines the QR code correction level,
     // we select a low-percentage error correction as we will display the QR code on a
@@ -34,26 +44,35 @@ struct MainView : View {
 
     // ===== PRIVATE VARIABLES =====
 
+    // let us find out which system text size was chosen
+    @Environment(\.dynamicTypeSize) private var environmentDynamicTypeSize  : DynamicTypeSize
+
     // let us find out if we should hide the app content
     @Environment(\.redactionReasons) private var environmentRedactionReasons : RedactionReasons
 
+    // define our focus state
+    @FocusState private var focusState : FocusStateEnum?
+
     // define our state
-    @State private var stateCalculatedPassword    : String       = ""
-    @State private var stateCalculationSuccess    : Bool         = false
-    @State private var stateCharacterset          : String       = calcpwApp.appstorageCharacterset
-    @State private var stateEnforce               : Bool         = calcpwApp.appstorageEnforce
-    @State private var stateInformation           : String       = ""
-    @State private var stateLength                : String       = calcpwApp.appstorageLength
-    @State private var statePassword1             : String       = ""
-    @State private var statePassword2             : String       = ""
-    @State private var stateShowConfiguration     : Bool         = false
-    @State private var stateShowCopiedToClipboard : Bool         = false
-    @State private var stateShowPassword          : Bool         = false
-    @State private var stateShowQRCode            : Bool         = false
-    @State private var stateShowSavedAsDefault    : Bool         = false
-    @State private var stateUnlocked              : Bool         = false
-    @State private var stateUnlockedOnce          : Bool         = false
-    @State private var stateUnlockedTimestamp     : TimeInterval = 0
+    @State private var stateCalculatedPassword     : String              = ""
+    @State private var stateCalculationSuccess     : Bool                = false
+    @State private var stateCharacterset           : String              = calcpwApp.appstorageCharacterset
+    @State private var stateEnforce                : Bool                = calcpwApp.appstorageEnforce
+    @State private var stateInformation            : String              = ""
+    @State private var stateLastFocus              : FocusStateEnum?     = nil
+    @State private var stateLength                 : String              = calcpwApp.appstorageLength
+    @State private var stateMessageImage           : String              = ""
+    @State private var stateMessageText            : String              = ""
+    @State private var statePassword1              : String              = ""
+    @State private var statePassword2              : String              = ""
+    @State private var stateShowConfiguration      : Bool                = false
+    @State private var stateShowMessage            : Bool                = false
+    @State private var stateShowPassword           : Bool                = false
+    @State private var stateShowQRCode             : Bool                = false
+    @State private var stateUIDeviceOrientation    : UIDeviceOrientation = UIDevice.current.orientation
+    @State private var stateUnlocked               : Bool                = false
+    @State private var stateUnlockedOnce           : Bool                = false
+    @State private var stateUnlockedTimestamp      : TimeInterval        = 0
 
     init(
         _ unlocked : Bool
@@ -66,22 +85,24 @@ struct MainView : View {
     // handle the calculate-password button click
     private func calculateButtonClicked() {
         if (isMainViewFormFilledOut()) {
-            withAnimation(.linear) {
-                // clear previous password display
-                stateCalculatedPassword = ""
-                stateCalculationSuccess = false
-                stateShowPassword       = false
-                stateShowQRCode         = false
+            // clear previous password display
+            stateCalculatedPassword = ""
+            stateCalculationSuccess = false
+            stateShowMessage        = false
+            stateShowPassword       = false
+            stateShowQRCode         = false
 
-                // calculate the password
-                stateCalculatedPassword = CalcPW.calcpw(statePassword1, statePassword2, stateInformation, stateLength, stateCharacterset, stateEnforce, $stateCalculationSuccess)
-                if (stateCalculationSuccess) {
-                    // reset configuration
-                    stateCharacterset = calcpwApp.appstorageCharacterset
-                    stateEnforce      = calcpwApp.appstorageEnforce
-                    stateInformation  = ""
-                    stateLength       = calcpwApp.appstorageLength
-                }
+            // calculate the password
+            stateCalculatedPassword = CalcPW.calcpw(statePassword1, statePassword2, stateInformation, stateLength, stateCharacterset, stateEnforce, $stateCalculationSuccess)
+            if (stateCalculationSuccess) {
+                // reset configuration
+                stateCharacterset = calcpwApp.appstorageCharacterset
+                stateEnforce      = calcpwApp.appstorageEnforce
+                stateInformation  = ""
+                stateLength       = calcpwApp.appstorageLength
+
+                // show an info about it
+                showMessageView("Calculated Password", "lock")
             }
         }
     }
@@ -93,6 +114,15 @@ struct MainView : View {
         }
     }
 
+    // handle the configuration return key press
+    private func configurationSubmitted() {
+        if (!stateShowMessage) {
+            if (isMainViewFormFilledOut()) {
+                calculateButtonClicked()
+            }
+        }
+    }
+
     // handle the copy-to-clipboard button click
     private func copyToClipboardButtonClicked() {
         if (stateCalculationSuccess) {
@@ -100,10 +130,32 @@ struct MainView : View {
             UIPasteboard.general.setItems([[UTType.utf8PlainText.identifier : stateCalculatedPassword]], options : [.localOnly : true])
 
             // show an info about it
-            withAnimation(.linear) {
-                stateShowCopiedToClipboard = true
+            showMessageView("Copied to Clipboard", "doc.on.clipboard")
+        }
+    }
+
+    // handle the enter-information return key press
+    private func enterInformationSubmitted() {
+        if (!stateShowMessage) {
+            if (isMainViewFormFilledOut()) {
+                calculateButtonClicked()
+            } else if (stateCalculationSuccess) {
+                copyToClipboardButtonClicked()
             }
         }
+    }
+
+    // handle the enter-password return key press
+    private func enterPasswordSubmitted() {
+        focusState = .repeatPassword
+    }
+
+    // check if the configuration is different from the stored default
+    private func isConfigurationModified(
+    ) -> Bool {
+        return ((stateCharacterset != calcpwApp.appstorageCharacterset) ||
+                (stateEnforce      != calcpwApp.appstorageEnforce)      ||
+                (stateLength       != calcpwApp.appstorageLength))
     }
 
     // check if all form values are set so that the password can be calculated
@@ -114,14 +166,6 @@ struct MainView : View {
                 (0 < stateInformation.count)   &&
                 (0 < stateLength.count)        &&
                 (0 < stateCharacterset.count))
-    }
-
-    // check if the configuration is different from the stored default
-    private func isConfigurationModified(
-    ) -> Bool {
-        return ((stateCharacterset != calcpwApp.appstorageCharacterset) ||
-                (stateEnforce      != calcpwApp.appstorageEnforce)      ||
-                (stateLength       != calcpwApp.appstorageLength))
     }
 
     // handle MainView appear
@@ -154,6 +198,19 @@ struct MainView : View {
         UIApplication.shared.hideKeyboard()
     }
 
+    // handle MessageView disappear
+    private func messageViewDisappear() {
+        if (nil != stateLastFocus) {
+            focusState     = stateLastFocus
+            stateLastFocus = nil
+        }
+    }
+
+    // handle the repeat-password return key press
+    private func repeatPasswordSubmitted() {
+        focusState = .enterInformation
+    }
+
     // handle save-as-default button click
     private func saveAsDefaultButtonClicked() {
         if (isConfigurationModified()) {
@@ -163,37 +220,73 @@ struct MainView : View {
             calcpwApp.appstorageLength       = stateLength
 
             // show an info about it
-            withAnimation(.linear) {
-                stateShowSavedAsDefault = true
-            }
+            showMessageView("Saved as Default", "square.and.arrow.down")
+        }
+    }
+
+    // show the message view
+    private func showMessageView(
+        _ text  : String,
+        _ image : String
+    ) {
+        // save the last focus, will be restored when the message view disappears
+        stateLastFocus = focusState
+
+        // configure the message view
+        stateMessageImage = image
+        stateMessageText  = text
+
+        withAnimation(.linear) {
+            // let the message view appear
+            stateShowMessage = true
         }
     }
 
     // handle show-password button click
     private func showPasswordButtonClicked() {
-        stateShowPassword.toggle()
+        withAnimation(.linear) {
+            stateShowPassword.toggle()
+        }
     }
 
     // handle show-qrcode button click
     private func showQRCodeButtonClicked() {
-        stateShowQRCode = true
+        withAnimation(.linear) {
+            stateShowQRCode = true
+        }
     }
 
-    // this splits a string into groups to make it more legible
+    // this splits a string into groups to make it more legible,
+    // the deviceOrientation parameter is only used to automatically
+    // redraw the text on orientation changes
     private func splitIntoGroups(
-        _ string : String
+        _ string            : String,
+        _ deviceOrientation : UIDeviceOrientation
     ) -> String {
         var result : String = ""
 
         if (0 >= MainView.PASSWORD_GROUPS_LENGTH) {
             result = string
         } else {
+            // calculate how many groups per line should fit
+            var groupsPerLine : Int = 1
+            switch (environmentDynamicTypeSize) {
+                case .xSmall:   groupsPerLine = Int((UIScreen.main.bounds.width - 110) / 80)
+                case .small:    groupsPerLine = Int((UIScreen.main.bounds.width - 110) / 85)
+                case .medium:   groupsPerLine = Int((UIScreen.main.bounds.width - 110) / 85)
+                case .large:    groupsPerLine = Int((UIScreen.main.bounds.width - 110) / 90)
+                case .xLarge:   groupsPerLine = Int((UIScreen.main.bounds.width - 110) / 95)
+                case .xxLarge:  groupsPerLine = Int((UIScreen.main.bounds.width - 110) / 105)
+                case .xxxLarge: groupsPerLine = Int((UIScreen.main.bounds.width - 110) / 115)
+                default:        groupsPerLine = Int((UIScreen.main.bounds.width - 110) / 200)
+            }
+
             for i in stride(from : 0, to : string.count, by : MainView.PASSWORD_GROUPS_LENGTH) {
                 // append the next slice
                 result.append(string[i..<((i+MainView.PASSWORD_GROUPS_LENGTH <= string.count) ? i+MainView.PASSWORD_GROUPS_LENGTH : string.count)])
 
                 // append a line break or space depending on the number of groups
-                result.append((((i / MainView.PASSWORD_GROUPS_LENGTH) + 1) % MainView.PASSWORD_GROUPS_PER_LINE == 0) ? "\n" : " ")
+                result.append((((i / MainView.PASSWORD_GROUPS_LENGTH) + 1) % groupsPerLine == 0) ? "\n" : " ")
             }
         }
 
@@ -206,11 +299,10 @@ struct MainView : View {
     ) -> some View {
         Text(string)
             .allowsTightening(true)
-            .fixedSize(horizontal : false, vertical : true)
-            .font(Font.custom("DejaVuSansMono", size : 16))
-            .frame(maxWidth : .infinity, maxHeight : .infinity, alignment : .center)
+            .font(.custom("DejaVuSansMono", size : 16))
             .lineLimit(nil)
-            .padding(.vertical)
+            .minimumScaleFactor(0.1)
+            .scaledToFit()
             .textContentType(.password)
     }
 
@@ -229,24 +321,36 @@ struct MainView : View {
                             SecureField(LocalizedStringKey("Enter Password"), text : $statePassword1)
                                 .autocapitalization(.none)
                                 .disableAutocorrection(true)
+                                .focused($focusState, equals : .enterPassword)
                                 .font(Font.custom("DejaVuSansMono", size : 16))
                                 .keyboardType(.asciiCapable)
                                 .textContentType(.password)
+                                .onSubmit {
+                                    enterPasswordSubmitted()
+                                }
 
                             SecureField(LocalizedStringKey("Repeat Password"), text : $statePassword2)
                                 .autocapitalization(.none)
                                 .disableAutocorrection(true)
+                                .focused($focusState, equals : .repeatPassword)
                                 .font(Font.custom("DejaVuSansMono", size : 16))
                                 .keyboardType(.asciiCapable)
                                 .textContentType(.password)
+                                .onSubmit {
+                                    repeatPasswordSubmitted()
+                                }
                         }
 
                         Section(header : Text(LocalizedStringKey("Information"))) {
                             TextField(LocalizedStringKey("Enter Information"), text : $stateInformation)
                                 .autocapitalization(.none)
                                 .disableAutocorrection(true)
+                                .focused($focusState, equals : .enterInformation)
                                 .font(Font.custom("DejaVuSansMono", size : 16))
                                 .keyboardType(.asciiCapable)
+                                .onSubmit {
+                                    enterInformationSubmitted()
+                                }
 
                             // as buttons in Forms look and behave weirdly
                             // we emulate a button by means of an HStack
@@ -270,9 +374,13 @@ struct MainView : View {
                                     TextField(LocalizedStringKey("Enter Length"), text : $stateLength)
                                         .autocapitalization(.none)
                                         .disableAutocorrection(true)
+                                        .focused($focusState, equals : .enterLength)
                                         .font(Font.custom("DejaVuSansMono", size : 16))
                                         .keyboardType(.numberPad)
                                         .multilineTextAlignment(.trailing)
+                                        .onSubmit {
+                                            configurationSubmitted()
+                                        }
                                 }
 
                                 HStack {
@@ -281,9 +389,13 @@ struct MainView : View {
                                     TextField(LocalizedStringKey("Enter Character Set"), text : $stateCharacterset)
                                         .autocapitalization(.none)
                                         .disableAutocorrection(true)
+                                        .focused($focusState, equals : .enterCharacterSet)
                                         .font(Font.custom("DejaVuSansMono", size : 16))
                                         .keyboardType(.asciiCapable)
                                         .multilineTextAlignment(.trailing)
+                                        .onSubmit {
+                                            configurationSubmitted()
+                                        }
                                 }
 
                                 Toggle(isOn : $stateEnforce) {
@@ -295,10 +407,10 @@ struct MainView : View {
                                 HStack(alignment : .center, spacing : 5) {
                                     Spacer()
 
-                                    Image(systemName : "slider.horizontal.3")
+                                    Image(systemName : "square.and.arrow.down")
                                         .foregroundColor(isConfigurationModified() ? .blue : .gray)
 
-                                    Text(LocalizedStringKey("Save As Default"))
+                                    Text(LocalizedStringKey("Save as Default"))
                                         .foregroundColor(isConfigurationModified() ? .blue : .gray)
 
                                     Spacer()
@@ -330,77 +442,75 @@ struct MainView : View {
 
                         if ("" != stateCalculatedPassword) {
                             Section {
-                                HStack (alignment : .firstTextBaseline) {
-                                    if (!stateCalculationSuccess) {
-                                        PasswordText(stateCalculatedPassword)
-                                    } else {
-                                        if (stateShowPassword) {
-                                            PasswordText(splitIntoGroups(stateCalculatedPassword))
-                                        } else {
-                                            PasswordText(NSLocalizedString("[hidden]", comment : ""))
-                                        }
-                                    }
-
+                                VStack {
                                     if (stateCalculationSuccess) {
-                                        Image(systemName : (stateShowPassword) ? "eye.fill" : "eye.slash.fill")
-                                        .onTapGesture {
-                                            showPasswordButtonClicked()
-                                        }
-                                    }
-                                }.clipped()
-                                .contentShape(Rectangle())
-                                .onTapGesture {
-                                    copyToClipboardButtonClicked()
-                                }
-                            }
+                                        HStack {
+                                            Image(systemName : "doc.on.clipboard")
+                                                .foregroundColor(.blue)
+                                                .onTapGesture {
+                                                    copyToClipboardButtonClicked()
+                                                }
 
-                            if (stateShowPassword) {
-                                Section {
-                                    if (stateShowQRCode) {
-                                        Image(uiImage : UIImage.generateQRCode(stateCalculatedPassword, MainView.QR_CODE_CORRECTION_LEVEL))
-                                            .interpolation(.none)
-                                            .resizable()
-                                            .scaledToFit()
-                                    } else {
-                                        // as buttons in Forms look and behave weirdly
-                                        // we emulate a button by means of an HStack
-                                        HStack(alignment : .center, spacing : 5) {
                                             Spacer()
 
                                             Image(systemName : "qrcode")
                                                 .foregroundColor(.blue)
-
-                                            Text(LocalizedStringKey("Generate QR Code"))
-                                                .foregroundColor(.blue)
+                                                .onTapGesture {
+                                                    showQRCodeButtonClicked()
+                                                }
 
                                             Spacer()
-                                        }.contentShape(Rectangle())
-                                        .onTapGesture {
-                                            showQRCodeButtonClicked()
+
+                                            Image(systemName : (stateShowPassword) ? "eye.fill" : "eye.slash.fill")
+                                                .foregroundColor(.blue)
+                                                .onTapGesture {
+                                                    showPasswordButtonClicked()
+                                                }
+                                        }.transaction{ transaction in
+                                            transaction.animation = nil
                                         }
                                     }
-                                }
+
+                                    Spacer()
+
+                                    HStack {
+                                        if (!stateCalculationSuccess) {
+                                            PasswordText(stateCalculatedPassword)
+                                        } else {
+                                            if (stateShowPassword) {
+                                                PasswordText(splitIntoGroups(stateCalculatedPassword, stateUIDeviceOrientation))
+                                            } else {
+                                                PasswordText(NSLocalizedString("[hidden]", comment : ""))
+                                            }
+                                        }
+                                    }
+                                }.padding(.all)
                             }
                         }
                     }.onTapGesture {
                         mainViewFormClicked()
-                    }
+                    }.disabled(stateShowMessage)
 
-                    if (stateShowCopiedToClipboard) {
-                        MessageView("Copied to Clipboard", "doc.on.clipboard", $stateShowCopiedToClipboard)
-                    }
-                    if (stateShowSavedAsDefault) {
-                        MessageView("Saved As Default", "square.and.arrow.down", $stateShowSavedAsDefault)
+                    if (stateShowMessage) {
+                        MessageView(stateMessageText, stateMessageImage, $stateShowMessage)
+                            .onDisappear(){
+                                messageViewDisappear()
+                            }
                     }
                 }.onAppear {
                     mainViewAppeared()
                 }.onDisappear {
                     mainViewDisappeared()
+                }.onReceive(NotificationCenter.Publisher(center : .default, name : UIDevice.orientationDidChangeNotification)) { _ in
+                    stateUIDeviceOrientation = UIDevice.current.orientation
+                }.sheet(isPresented : $stateShowQRCode) {
+                    QRCodeView(UIImage.generateQRCode(stateCalculatedPassword, MainView.QR_CODE_CORRECTION_LEVEL))
                 }.statusBar(hidden : false)
                 .zIndex(0) // ensure that we are in the back
             }
         }
     }
+
 }
 
 struct MainView_Previews : PreviewProvider {

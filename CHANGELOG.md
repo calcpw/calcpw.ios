@@ -1,5 +1,16 @@
 # Changelog
 
+## v1.5b1 (13.11.2022)
+
+* Feature: use the return key to jump to the next text field
+* Feature: use the return key in the info field to calculate the password
+* Feature: use the return key in the EMPTY info field to copy the password to the clipboard
+* Feature: the number of password groups per line is now based on the screen width
+* Feature: introduced support for different system font sizes
+* Feature: introduced copy-to-clipboard icon for better usability
+* Feature: introduced QR code icon for direct access
+* Feature: improved overall user experience
+
 ## v1.4.1b1 (28.09.2022)
 
 * Bug: fix wrongly generated reason for local authentication on Apple Silicon MacBooks

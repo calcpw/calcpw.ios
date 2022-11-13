@@ -1,4 +1,5 @@
 "Calculate Password"    = "Passwort berechnen";
+"Calculated Password"   = "Passwort berechnet";
 "Character Set"         = "Zeichensatz";
 "Configuration"         = "Konfiguration";
 "Copied to Clipboard"   = "In Zwischenablage kopiert";
@@ -10,8 +11,8 @@
 "Length"                = "Länge";
 "Password"              = "Passwort";
 "Repeat Password"       = "Passwort erneut eingeben";
-"Save As Default"       = "Als Vorgabe speichern";
-"Saved As Default"      = "Als Vorgabe gespeichert";
+"Save as Default"       = "Als Standard speichern";
+"Saved as Default"      = "Als Standard gespeichert";
 
 "character set contains illegal characters"                      = "der Zeichensatz enthält ungültige Zeichen";
 "character set is malformed"                                     = "der Zeichensatz hat ein ungültiges Format";

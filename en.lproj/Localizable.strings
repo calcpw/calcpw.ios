@@ -1,4 +1,5 @@
 "Calculate Password"    = "Calculate Password";
+"Calculated Password"   = "Calculated Password";
 "Character Set"         = "Character Set";
 "Configuration"         = "Configuration";
 "Copied to Clipboard"   = "Copied to Clipboard";
@@ -10,8 +11,8 @@
 "Length"                = "Length";
 "Password"              = "Password";
 "Repeat Password"       = "Repeat Password";
-"Save As Default"       = "Save As Default";
-"Saved As Default"      = "Saved As Default";
+"Save as Default"       = "Save as Default";
+"Saved as Default"      = "Saved as Default";
 
 "character set contains illegal characters"                      = "character set contains illegal characters";
 "character set is malformed"                                     = "character set is malformed";

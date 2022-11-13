@@ -22,10 +22,10 @@ struct MessageView : View {
         _ image       : String,
         _ showMessage : Binding<Bool>
     ) {
-        stateDispatchItem = nil
-        stateImage        = image
-        stateShowMessage  = showMessage
-        stateText         = text
+        _stateDispatchItem = State(initialValue : nil)
+        _stateImage        = State(initialValue : image)
+        _stateShowMessage  = State(initialValue : showMessage)
+        _stateText         = State(initialValue : text)
     }
 
     // ===== PRIVATE FUNCTIONS =====
@@ -46,11 +46,14 @@ struct MessageView : View {
 
     // handle MessageView click
     private func messageViewClicked() {
+        // hide the info right away
+        stateShowMessage.wrappedValue = false
+    }
+
+    // handle MessageView disappear
+    private func messageViewDisappeared() {
         // cancel the hiding animation
         stateDispatchItem?.cancel()
-
-        // hide the info directly
-        stateShowMessage.wrappedValue = false
     }
 
     // ===== MAIN INTERFACE TO APP =====
@@ -64,7 +67,7 @@ struct MessageView : View {
             ZStack {
                 RoundedRectangle(cornerRadius : 20)
                     .fill(.gray)
-                    .frame(width : 250, height : 250)
+                    .frame(width : 300, height : 300)
 
                 VStack {
                     Image(systemName : stateImage)
@@ -75,10 +78,15 @@ struct MessageView : View {
                     Text(LocalizedStringKey(stateText))
                         .fontWeight(.semibold)
                         .foregroundColor(.white)
+                        .frame(maxWidth : 250, maxHeight : .infinity, alignment : .center)
+                        .minimumScaleFactor(0.1)
+                        .scaledToFit()
                 }
             }
         }.onAppear {
             messageViewAppeared()
+        }.onDisappear {
+            messageViewDisappeared()
         }.onTapGesture {
             messageViewClicked()
         }.zIndex(1) // ensure that we are on top
@@ -88,10 +96,10 @@ struct MessageView : View {
 
 struct MessageView_Previews : PreviewProvider {
 
-    @State private static var showMessageDialog : Bool = true
+    @State private static var stateShowMessage : Bool = true
 
     public static var previews : some View {
-        MessageView("Example Text", "questionmark", $showMessageDialog)
+        MessageView("Example Text", "questionmark", $stateShowMessage)
     }
 
 }

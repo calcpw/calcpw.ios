@@ -30,7 +30,7 @@ struct PrivacyView : View {
     private func privacyViewAppeared() {
         UIApplication.shared.hideKeyboard()
 
-        // do not trigger then authentication when we are not asked to
+        // do not trigger the authentication when we are not asked to
         if (!stateUnlocked.wrappedValue) {
             // prevent the authentication from being called in a loop
             if (!stateUnlockedOnce.wrappedValue) {

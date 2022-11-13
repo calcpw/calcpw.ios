@@ -21,6 +21,7 @@
 		B9D5D5CF2801C244003C3877 /* calcpwApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9D5D5CE2801C244003C3877 /* calcpwApp.swift */; };
 		B9D5D5D32801C245003C3877 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9D5D5D22801C245003C3877 /* Assets.xcassets */; };
 		B9D5D5DF280303B1003C3877 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9D5D5DD280303AA003C3877 /* Security.framework */; };
+		B9DE759B291AE55D0075432C /* QRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9DE759A291AE55D0075432C /* QRCodeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		B9D5D5D22801C245003C3877 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B9D5D5DD280303AA003C3877 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B9D5D5E428032891003C3877 /* calcpw-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "calcpw-Info.plist"; sourceTree = SOURCE_ROOT; };
+		B9DE759A291AE55D0075432C /* QRCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QRCodeView.swift; path = Views/QRCodeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,17 +80,18 @@
 		B9D5D5CD2801C244003C3877 /* calcpw */ = {
 			isa = PBXGroup;
 			children = (
+				B9D5D5CE2801C244003C3877 /* calcpwApp.swift */,
+				B95655FF280DAB3D0042822D /* CalcPW.swift */,
 				B9565605280DAB450042822D /* MainView.swift */,
 				B9565607280DAB450042822D /* MessageView.swift */,
 				B9565606280DAB450042822D /* PrivacyView.swift */,
-				B95655FF280DAB3D0042822D /* CalcPW.swift */,
+				B9DE759A291AE55D0075432C /* QRCodeView.swift */,
 				B9565601280DAB3D0042822D /* String.swift */,
 				B9565600280DAB3D0042822D /* UIApplication.swift */,
+				B9D5D5D22801C245003C3877 /* Assets.xcassets */,
 				B95655FD280DAB300042822D /* DejaVuSansMono.ttf */,
 				B9D5D5E428032891003C3877 /* calcpw-Info.plist */,
 				B99C709E2809E68000DE5EF6 /* Localizable.strings */,
-				B9D5D5CE2801C244003C3877 /* calcpwApp.swift */,
-				B9D5D5D22801C245003C3877 /* Assets.xcassets */,
 				B956560B280DB3500042822D /* Settings.bundle */,
 			);
 			path = calcpw;
@@ -179,6 +182,7 @@
 				B9565603280DAB3D0042822D /* UIApplication.swift in Sources */,
 				B91044B528DFBFC100A06D54 /* UIImage.swift in Sources */,
 				B9565604280DAB3D0042822D /* String.swift in Sources */,
+				B9DE759B291AE55D0075432C /* QRCodeView.swift in Sources */,
 				B9565602280DAB3D0042822D /* CalcPW.swift in Sources */,
 				B956560A280DAB450042822D /* MessageView.swift in Sources */,
 				B9565609280DAB450042822D /* PrivacyView.swift in Sources */,
@@ -350,12 +354,13 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.4.1;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = sh.yahe.calcpw;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -384,12 +389,13 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.4.1;
+				MARKETING_VERSION = 1.5;
 				NSFaceIDUsageDescription = "";
 				PRODUCT_BUNDLE_IDENTIFIER = sh.yahe.calcpw;
 				PRODUCT_NAME = "$(TARGET_NAME)";
