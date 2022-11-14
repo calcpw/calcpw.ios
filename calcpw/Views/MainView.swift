@@ -281,6 +281,11 @@ struct MainView : View {
                 default:        groupsPerLine = Int((UIScreen.main.bounds.width - 110) / 200)
             }
 
+            // make sure that there is at least one group per line
+            if (groupsPerLine <= 0) {
+                groupsPerLine = 1
+            }
+
             for i in stride(from : 0, to : string.count, by : MainView.PASSWORD_GROUPS_LENGTH) {
                 // append the next slice
                 result.append(string[i..<((i+MainView.PASSWORD_GROUPS_LENGTH <= string.count) ? i+MainView.PASSWORD_GROUPS_LENGTH : string.count)])

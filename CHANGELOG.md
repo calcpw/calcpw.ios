@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.5b2 (14.11.2022)
+
+* Bug: make sure that there is at least one password group per line for display sizes we do not know
+
 ## v1.5b1 (13.11.2022)
 
 * Feature: use the return key to jump to the next text field

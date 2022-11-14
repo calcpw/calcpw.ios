@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B91044B528DFBFC100A06D54 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91044B428DFBFC100A06D54 /* UIImage.swift */; };
+		B949FC4029222CAB0091F415 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B949FC3F29222CAB0091F415 /* UIImage.swift */; };
 		B95655FE280DAB300042822D /* DejaVuSansMono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B95655FD280DAB300042822D /* DejaVuSansMono.ttf */; };
 		B9565602280DAB3D0042822D /* CalcPW.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95655FF280DAB3D0042822D /* CalcPW.swift */; };
 		B9565603280DAB3D0042822D /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9565600280DAB3D0042822D /* UIApplication.swift */; };
@@ -25,7 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B91044B428DFBFC100A06D54 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIImage.swift; path = calcpw/Helpers/UIImage.swift; sourceTree = "<group>"; };
+		B949FC3F29222CAB0091F415 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIImage.swift; path = Helpers/UIImage.swift; sourceTree = "<group>"; };
 		B95655FD280DAB300042822D /* DejaVuSansMono.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = DejaVuSansMono.ttf; path = Fonts/DejaVuSansMono.ttf; sourceTree = "<group>"; };
 		B95655FF280DAB3D0042822D /* CalcPW.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CalcPW.swift; path = Helpers/CalcPW.swift; sourceTree = "<group>"; };
 		B9565600280DAB3D0042822D /* UIApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIApplication.swift; path = Helpers/UIApplication.swift; sourceTree = "<group>"; };
@@ -61,7 +61,6 @@
 		B9D5D5C22801C244003C3877 = {
 			isa = PBXGroup;
 			children = (
-				B91044B428DFBFC100A06D54 /* UIImage.swift */,
 				B9757A3328DE5D8E0055091F /* InfoPlist.strings */,
 				B9D5D5CD2801C244003C3877 /* calcpw */,
 				B9D5D5CC2801C244003C3877 /* Products */,
@@ -88,6 +87,7 @@
 				B9DE759A291AE55D0075432C /* QRCodeView.swift */,
 				B9565601280DAB3D0042822D /* String.swift */,
 				B9565600280DAB3D0042822D /* UIApplication.swift */,
+				B949FC3F29222CAB0091F415 /* UIImage.swift */,
 				B9D5D5D22801C245003C3877 /* Assets.xcassets */,
 				B95655FD280DAB300042822D /* DejaVuSansMono.ttf */,
 				B9D5D5E428032891003C3877 /* calcpw-Info.plist */,
@@ -180,7 +180,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9565603280DAB3D0042822D /* UIApplication.swift in Sources */,
-				B91044B528DFBFC100A06D54 /* UIImage.swift in Sources */,
+				B949FC4029222CAB0091F415 /* UIImage.swift in Sources */,
 				B9565604280DAB3D0042822D /* String.swift in Sources */,
 				B9DE759B291AE55D0075432C /* QRCodeView.swift in Sources */,
 				B9565602280DAB3D0042822D /* CalcPW.swift in Sources */,
