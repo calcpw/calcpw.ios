@@ -16,7 +16,7 @@
 			<key>Key</key>
 			<string>appVersion</string>
 			<key>DefaultValue</key>
-			<string>1.5</string>
+			<string>1.5.1</string>
 		</dict>
 		<dict>
 			<key>Type</key>
