@@ -103,7 +103,7 @@ struct CalcPW {
             // random IV generation
             counter = aes256_ecb(pbkdf2, [UInt8](repeating : 0, count : 16))
             if (0 >= counter.count) {
-                result                  = NSLocalizedString("random IV generation failed", comment : "")
+                result             = NSLocalizedString("random IV generation failed", comment : "")
                 state.wrappedValue = false
             } else {
                 // key expansion and and encoding
