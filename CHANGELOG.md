@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.5.2 (09.02.2024)
+
+* Info: Update app to use new XCode features and change URLs in the app description
+
 ## v1.5b2 (14.11.2022)
 
 * Bug: make sure that there is at least one password group per line for display sizes we do not know

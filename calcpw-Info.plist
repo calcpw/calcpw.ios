@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright (c) 2022-2023, Kevin Niehage</string>
+	<string>Copyright (c) 2022-2024, Kevin Niehage</string>
 	<key>LSMultipleInstancesProhibited</key>
 	<true/>
 	<key>NSSupportsSuddenTermination</key>

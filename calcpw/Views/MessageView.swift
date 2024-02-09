@@ -2,7 +2,7 @@
 // MessageView.swift
 // calc.pw
 //
-// Copyright (c) 2022, Yahe
+// Copyright (c) 2022-2024, Yahe
 // All rights reserved.
 //
 

@@ -2,7 +2,7 @@
 // calcpwApp.swift
 // calc.pw
 //
-// Copyright (c) 2022, Yahe
+// Copyright (c) 2022-2024, Yahe
 // All rights reserved.
 //
 // This app implements the calc.pw password calculation algorithm and serves as a reference implementation.
