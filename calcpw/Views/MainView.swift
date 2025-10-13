@@ -2,7 +2,7 @@
 // MainView.swift
 // calc.pw
 //
-// Copyright (c) 2022-2024, Yahe
+// Copyright (c) 2022-2025, WeizenSpreu
 // All rights reserved.
 //
 
