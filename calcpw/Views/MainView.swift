@@ -356,21 +356,23 @@ struct MainView : View {
                                 .onSubmit {
                                     enterInformationSubmitted()
                                 }
-
+                            
                             // as buttons in Forms look and behave weirdly
                             // we emulate a button by means of an HStack
                             HStack {
                                 Text(LocalizedStringKey("Configuration"))
                                     .foregroundColor(.blue)
-
+                                
                                 Spacer()
-
+                                
                                 Image(systemName : (stateShowConfiguration) ? "chevron.down" : "chevron.right")
                                     .foregroundColor(.blue)
                             }.contentShape(Rectangle())
-                            .onTapGesture {
-                                configurationButtonClicked()
-                            }
+                            .simultaneousGesture(
+                                TapGesture().onEnded { _ in
+                                    configurationButtonClicked()
+                                }
+                            )
 
                             if (stateShowConfiguration) {
                                 HStack {
@@ -420,9 +422,11 @@ struct MainView : View {
 
                                     Spacer()
                                 }.contentShape(Rectangle())
-                                .onTapGesture {
-                                    saveAsDefaultButtonClicked()
-                                }
+                                .simultaneousGesture(
+                                    TapGesture().onEnded { _ in
+                                        saveAsDefaultButtonClicked()
+                                    }
+                                )
                             }
                         }
 
@@ -440,9 +444,11 @@ struct MainView : View {
 
                                 Spacer()
                             }.contentShape(Rectangle())
-                            .onTapGesture {
-                                calculateButtonClicked()
-                            }
+                            .simultaneousGesture(
+                                TapGesture().onEnded { _ in
+                                    calculateButtonClicked()
+                                }
+                            )
                         }
 
                         if ("" != stateCalculatedPassword) {
@@ -452,25 +458,31 @@ struct MainView : View {
                                         HStack {
                                             Image(systemName : "doc.on.clipboard")
                                                 .foregroundColor(.blue)
-                                                .onTapGesture {
-                                                    copyToClipboardButtonClicked()
-                                                }
+                                                .simultaneousGesture(
+                                                    TapGesture().onEnded { _ in
+                                                        copyToClipboardButtonClicked()
+                                                    }
+                                                )
 
                                             Spacer()
 
                                             Image(systemName : "qrcode")
                                                 .foregroundColor(.blue)
-                                                .onTapGesture {
-                                                    showQRCodeButtonClicked()
-                                                }
+                                                .simultaneousGesture(
+                                                    TapGesture().onEnded { _ in
+                                                        showQRCodeButtonClicked()
+                                                    }
+                                                )
 
                                             Spacer()
 
                                             Image(systemName : (stateShowPassword) ? "eye.fill" : "eye.slash.fill")
                                                 .foregroundColor(.blue)
-                                                .onTapGesture {
-                                                    showPasswordButtonClicked()
-                                                }
+                                                .simultaneousGesture(
+                                                    TapGesture().onEnded { _ in
+                                                        showPasswordButtonClicked()
+                                                    }
+                                                )
                                         }.transaction{ transaction in
                                             transaction.animation = nil
                                         }
@@ -492,9 +504,12 @@ struct MainView : View {
                                 }.padding(.all)
                             }
                         }
-                    }.onTapGesture {
-                        mainViewFormClicked()
                     }.disabled(stateShowMessage)
+                    .simultaneousGesture(
+                        TapGesture().onEnded { _ in
+                            mainViewFormClicked()
+                        }
+                    )
 
                     if (stateShowMessage) {
                         MessageView(stateMessageText, stateMessageImage, $stateShowMessage)

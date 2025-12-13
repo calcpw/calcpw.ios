@@ -51,7 +51,7 @@ struct QRCodeView : View {
             }
         }.onTapGesture {
             environmentDismiss()
-        }
+        }.zIndex(1) // ensure that we are on top
     }
 
 }
